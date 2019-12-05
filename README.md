@@ -13,9 +13,13 @@ https://rell.chromia.com/en/0.10.0/eclipse/eclipse.html
 
 ## Overview
 
-In this demo project, we have created a few base libraries and namespaces due to time constraints. The libraries found inside the directory: /rell/src/lib were provided by Chromaway and are not included in every default rell project.  
+In this demo project, we have created a few base libraries and namespaces due to time constraints. The libraries found inside the directory: /rell/src/lib were provided by Chromaway and are not included in every default rell project. 
+
+Inside this project you should see two main directories, config and src.  The config folder will contain a node-config.properties file. This file is used to determine the node settings that are configured when ran. Src should contain your rell code. The main.rell file located inside of src is the file that you will be selecting to run your entire node.
 
 ## Step 1
+
+
 
 ## Step 2
 
