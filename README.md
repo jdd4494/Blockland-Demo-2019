@@ -42,6 +42,7 @@ entity player {
 
 ## Step 2
 
+Inside of player.rell:
 * Create a player info struct. Structs are similar to entity classes, but are held temporarily in memory and not in the database
 
 ```
@@ -56,6 +57,7 @@ struct player_info{
 
 ## Step 3
 
+Inside of player.rell:
 * Write an operation that will create a player and add it to the Player table
 
 ```
@@ -82,6 +84,7 @@ operation create_player(
 
 ## Step 4
 
+Inside of player.rell:
 * Write a query that will search the Player table for players by their username
 
 ```
@@ -109,7 +112,8 @@ query find_player_by_username(username: text){
 
 ## Step 5
 
-* Write an operation that will update a player's information in the Player table <br>Note:</br> only <br>mutable</br> variables can be edited
+Inside of player.rell:
+* Write an operation that will update a player's information in the Player table <b>Note:</b> only <b>mutable</b> variables can be edited
 
 ```
 operation update_player(
@@ -132,6 +136,8 @@ operation update_player(
 
 ## Step 6
 
+Inside of weapon.rell:
+* Create a weapon info struct that will contain the weapon's data
 
 ```
 struct weapon_info{
@@ -145,6 +151,9 @@ struct weapon_info{
 ```
 
 ## Step 7
+
+Inside of weapon.rell:
+* Create the weapon entitee.  In our example, weapons are a type of Non Fungible Asset. The actual weapon that we are creating is an entitee of that NFA.  The information about the weapon entitee are called properties.
 
 ```
 operation create_weapon(
@@ -160,6 +169,8 @@ operation create_weapon(
 
 ## Step 8
 
+Inside of weapon.rell:
+* Write a query that will allow us to lookup weapon NFAs owned by a player using their account id 
 
 ```
 query find_weapon_by_account_id( account_id: byte_array ){
