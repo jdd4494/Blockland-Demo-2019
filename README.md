@@ -26,6 +26,9 @@ Inside this project you should see two main directories, config and src.  The co
 
 ## Step 1
 
+Inside of player.rell:
+* Create a player entity. This will be a table stored in the database that will contain your Player data
+
 ```
 entity player {
 	key account: ft3.acc.account;
@@ -39,6 +42,8 @@ entity player {
 
 ## Step 2
 
+* Create a player info struct. Structs are similar to entity classes, but are held temporarily in memory and not in the database
+
 ```
 struct player_info{
 	username: text;
@@ -51,6 +56,7 @@ struct player_info{
 
 ## Step 3
 
+* Write an operation that will create a player and add it to the Player table
 
 ```
 operation create_player(
@@ -76,6 +82,8 @@ operation create_player(
 
 ## Step 4
 
+* Write a query that will search the Player table for players by their username
+
 ```
 query find_player_by_username(username: text){
 	
@@ -100,6 +108,8 @@ query find_player_by_username(username: text){
 ```
 
 ## Step 5
+
+* Write an operation that will update a player's information in the Player table <br>Note:</br> only <br>mutable</br> variables can be edited
 
 ```
 operation update_player(
