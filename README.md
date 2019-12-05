@@ -11,7 +11,7 @@ This demo is designed to introduce a developer to creating backend in rell.  By 
 <b>This demo assumes you are using the eclipse IDE</b>
 
 A great guide on how to get your environment setup:
-https://rell.chromia.com/en/0.10.0/eclipse/eclipse.html
+\n https://rell.chromia.com/en/0.10.0/eclipse/eclipse.html
 
 ## Overview
 
@@ -19,11 +19,18 @@ In this demo project, we have created a few base libraries and namespaces due to
 
 Inside this project you should see two main directories, config and src.  The config folder will contain a node-config.properties file. This file is used to determine the node settings that are configured when ran. Src should contain your rell code. The main.rell file located inside of src is the file that you will be selecting to run your entire node.
 
+## Step 0
+
+* Create a new file and call it player.rell inside of: rell/src/my_game. This will be where we create a player class
+* Create a second file and call it weapon.rell inside of: rell/src/my_game. This is where we will be creating weapons for the player to use
+
 ## Step 1
 
-
+*
 
 ## Step 2
+
+
 
 ## Step 3
 
