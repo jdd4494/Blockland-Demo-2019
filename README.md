@@ -21,12 +21,21 @@ Inside this project you should see two main directories, config and src.  The co
 
 ## Step 0
 
-* Create a new file and call it player.rell inside of: rell/src/my_game. This will be where we create a player class
-* Create a second file and call it weapon.rell inside of: rell/src/my_game. This is where we will be creating weapons for the player to use
+* Create a new file and call it player.rell inside of: rell/src/my_game.
+* Create a second file and call it weapon.rell inside of: rell/src/my_game. 
 
 ## Step 1
 
-*
+```
+entity player {
+	key account: ft3.acc.account;
+	key username: text;
+	mutable level: integer;
+	mutable strength: integer;
+	mutable speed: integer;
+	mutable skill: integer;
+}
+```
 
 ## Step 2
 
