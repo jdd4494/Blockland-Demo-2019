@@ -11,7 +11,7 @@ This demo is designed to introduce a developer to creating backend in rell.  By 
 <b>This demo assumes you are using the eclipse IDE</b>
 
 A great guide on how to get your environment setup:
-\n https://rell.chromia.com/en/0.10.0/eclipse/eclipse.html
+https://rell.chromia.com/en/0.10.0/eclipse/eclipse.html
 
 ## Overview
 
