@@ -1,0 +1,45 @@
+
+// STEP 6 - CREATE WEAPON INFO STRUCT
+struct weapon_info{
+	id: integer;
+	name: text;
+	type: text;
+	rarity: text;
+	damage: integer;
+	price: integer;
+}
+
+// STEP 7 - CREATE WEAPON ENTITEE
+// NFA GROUPS ARE HIGH LEVEL CLASSIFICATION OF A TYPE OF ASSET
+// ENTITEES BELONG TO SPECIFIC NFA GROUPS
+// ENTITEES CONTAIN PROPERTIES WHICH GIVE IT UNIQUE CHARACTERISTICS
+operation create_weapon(
+	weapon_info
+){
+	// in this example, the NFA can be a type of weapon (sword, spear, axe, etc)
+	var nfa_weapon = nfa.n.nfa @? { .name == 'weapons' };
+	
+	// TODO CREATE WEAPONS
+	// TODO PASS OWNERSHIP OF WEAPON TO USER
+}
+
+// STEP 8 - QUERY WEAPON PLAYER OWNS
+query find_weapon_by_account_id( account_id: byte_array ){
+	
+	// searches for account based on provided account id
+	val account = ft3.acc.account @ { .id == account_id };
+	
+	// search through all NFA-weapons the player owns
+	val nfas = nfa.ft3.ownership @* { .entitee.nfa.name == 'weapons', .account == account }(
+		entitee = .entitee
+	);
+	
+	// loop through results and return them
+	val results = list<nfa.e.entity_description>();
+	for(nfaWeapon in nfas){
+		val en = nfa.e.getEntitee(nfaWeapon.entitee);		
+		results.add(en);
+	}
+	
+	return results;
+}

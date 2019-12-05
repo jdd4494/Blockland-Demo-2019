@@ -1,0 +1,52 @@
+
+import p: ^.property;
+import t: ^.supported_types;
+
+// TODO: this is create property
+function createComponent(name: text, type: t.type, extra: gtv?): component {
+	var extra_serialized: byte_array;	
+	when(type) {
+		t.type.INTEGER -> {
+			require_not_empty(extra);
+			extra_serialized = t.convert_to_integer_extra(extra).to_bytes();
+		};
+		t.type.DECIMAL -> {
+			require_not_empty(extra);
+			extra_serialized = t.convert_to_decimal_extra(extra).to_bytes();
+		};
+		t.type.ENUM -> {
+			require_not_empty(extra);
+			extra_serialized = t.convert_to_enum_extra(extra).to_bytes();
+		};
+		// TODO: implement constraints for
+		// 			- text (min max length)
+		//			- byte_array (max_size)
+		t.type.NFA -> {
+			require_not_empty(extra);
+			extra_serialized = t.convert_to_nfa_extra(extra).to_bytes();
+		};
+		else -> {
+			// type with no extra
+			extra_serialized = x""; // not possible to create empty byte_array? 			
+		};
+	}
+	
+	// all names are lower case to provide consistency use of snake-case is suggested
+	val nameLow = name.lower_case(); 
+	val newComponent = create component (
+		.name = nameLow,
+		.blockchain_rid = chain_context.blockchain_rid,
+		.id = (nameLow, chain_context.blockchain_rid).hash(),
+		type,
+		.extra = extra_serialized
+	);
+	
+	return newComponent;
+}
+
+function ensureComponent(component_name: text, component_bc_rid: byte_array, component_type: t.type, extra: gtv): component {
+	val isComponentStructure = component@?{
+		.id == (component_name.lower_case(), component_bc_rid).hash()
+	};
+	return isComponentStructure?: createComponent(component_name, component_type, extra);
+}

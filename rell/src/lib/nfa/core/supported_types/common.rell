@@ -1,0 +1,30 @@
+
+import e: ^.entitee;
+import p: ^.property;
+
+function get_value_from_property(e: e.entitee, p: p.property): gtv {
+	val component = p.component;
+	
+	val cv: gtv;
+	when(component.type) {
+			type.INTEGER -> {
+				cv = (p.integer_property@{e, p}.value).to_gtv();
+			};
+			type.DECIMAL -> {
+				cv = (p.decimal_property@{e, p}.value).to_gtv();
+			};
+			type.ENUM -> {
+				cv = (p.enum_property@{e, p}.value).to_gtv(); 
+			};
+			type.TEXT -> {
+				cv = (p.text_property@{e, p}.value).to_gtv();
+			};
+			type.BYTE_ARRAY -> {
+				cv = (p.bytes_property@{e, p}.value).to_gtv();
+			};
+			type.NFA -> {
+				cv = (p.nfa_property@{.entitee == e, p}.value.id).to_gtv();
+			};
+		}
+		return cv;
+}
