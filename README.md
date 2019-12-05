@@ -13,6 +13,8 @@ https://rell.chromia.com/en/0.10.0/eclipse/eclipse.html
 
 ## Overview
 
+In this demo project, we have created a few base libraries and namespaces due to time constraints. The libraries found inside the directory: /rell/src/lib were provided by Chromaway and are not included in every default rell project.  
+
 ## Step 1
 
 ## Step 2
