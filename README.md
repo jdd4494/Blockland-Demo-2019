@@ -8,7 +8,7 @@ This demo is designed to introduce a developer to creating backend in rell.  By 
 * To be able to run a Postchain node: PostresSQL 10
 * (Recommended but optional) Rell Eclipse IDE https://www.chromia.dev/rell-eclipse/index.html
 
-<b>This demo assumes you are using the eclipse IDE<b>
+<b>This demo assumes you are using the eclipse IDE</b>
 
 A great guide on how to get your environment setup:
 https://rell.chromia.com/en/0.10.0/eclipse/eclipse.html
