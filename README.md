@@ -150,8 +150,35 @@ struct weapon_info{
 	price: integer;
 }
 ```
-
 ## Step 7
+
+<b>Inside of weapon.rell:</b>
+* Create the weapon NFA 
+
+```
+operation create_weapon_nfa(){
+	val nameCompentStructure = nfa.c.createComponent('name', nfa.t.type.TEXT, ("weaponName").to_gtv());
+	val typeCompentStructure = nfa.c.createComponent('type', nfa.t.type.TEXT, ("weaponType").to_gtv());
+	val rarityCompentStructure = nfa.c.createComponent('rarity', nfa.t.type.TEXT, ("weaponRarity").to_gtv());
+	var damageCompentStructure = nfa.c.createComponent('damage', nfa.t.type.INTEGER, [0, integer.MAX_VALUE].to_gtv());
+	var priceCompentStructure = nfa.c.createComponent('price', nfa.t.type.INTEGER, [0, integer.MAX_VALUE].to_gtv());
+	
+	nfa.n.easyCreateNFA(
+		"weapons",
+		"Weapons For Game",
+		integer.MAX_VALUE,
+		map<name, (byte_array, boolean, boolean)>([
+			"name": (nameCompentStructure.id, true, false),
+			"type": (typeCompentStructure.id, true, false),
+			"rarity": (rarityCompentStructure.id, true, false),
+			"damage": (damageCompentStructure.id, true, false),
+			"price": (priceCompentStructure.id, true, true)
+		])
+	);
+}
+```
+
+## Step 8
 
 <b>Inside of weapon.rell:</b>
 * Create the weapon entitee.  In our example, weapons are a type of Non Fungible Asset. The actual weapon that we are creating is an entitee of that NFA.  The information about the weapon entitee are called properties.
@@ -168,7 +195,7 @@ operation create_weapon(
 }
 ```
 
-## Step 8
+## Step 9
 
 <b>Inside of weapon.rell:</b>
 * Write a query that will allow us to lookup weapon NFAs owned by a player using their account id 
