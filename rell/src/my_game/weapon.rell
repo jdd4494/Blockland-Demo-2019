@@ -1,79 +1,13 @@
 // STEP 6 - CREATE WEAPON INFO STRUCT
-struct weapon_info{
-	id: integer;
-	name: text;
-	type: text;
-	rarity: text;
-	damage: integer;
-	price: integer;
-}
+
 
 // STEP 7 - CREATE WEAPON NFA
-operation create_weapon_nfa(){
-	val nameCompentStructure = nfa.c.createComponent('name', nfa.t.type.TEXT, ("weaponName").to_gtv());
-	val typeCompentStructure = nfa.c.createComponent('type', nfa.t.type.TEXT, ("weaponType").to_gtv());
-	val rarityCompentStructure = nfa.c.createComponent('rarity', nfa.t.type.TEXT, ("weaponRarity").to_gtv());
-	var damageCompentStructure = nfa.c.createComponent('damage', nfa.t.type.INTEGER, [0, integer.MAX_VALUE].to_gtv());
-	var priceCompentStructure = nfa.c.createComponent('price', nfa.t.type.INTEGER, [0, integer.MAX_VALUE].to_gtv());
-	
-	nfa.n.easyCreateNFA(
-		"weapons",
-		"Weapons For Game",
-		integer.MAX_VALUE,
-		map<name, (byte_array, boolean, boolean)>([
-			"name": (nameCompentStructure.id, true, false),
-			"type": (typeCompentStructure.id, true, false),
-			"rarity": (rarityCompentStructure.id, true, false),
-			"damage": (damageCompentStructure.id, true, false),
-			"price": (priceCompentStructure.id, true, true)
-		])
-	);
-}
+
 
 // STEP 8 - CREATE WEAPON ENTITEE
 // NFA GROUPS ARE HIGH LEVEL CLASSIFICATION OF A TYPE OF ASSET
 // ENTITEES BELONG TO SPECIFIC NFA GROUPS
 // ENTITEES CONTAIN PROPERTIES WHICH GIVE IT UNIQUE CHARACTERISTICS
-operation create_weapon_entitee(
-	weapon_info,
-	user_auth: ft3.acc.auth_descriptor
-){
-	
-	// searches for account based on the provided vault private/public key
-	val account = ft3.acc.account_auth_descriptor @ { .descriptor_id == user_auth.hash() };
-	
-	// in this example, the NFA can be a type of weapon (sword, spear, axe, etc)
-	var nfa_weapon = nfa.n.nfa @ { .name == 'weapons' };
-	
-	val entityId = weapon_info.id;	
-	val entitee = nfa.e.createEntitee(nfa_weapon, entityId.hash(), map<text, gtv>([
-		"name": weapon_info.name.to_gtv(),
-		"type": weapon_info.type.to_gtv(),
-		"rarity": weapon_info.rarity.to_gtv(),
-		"damage": weapon_info.damage.to_gtv()
-	]));
-	
-	// set NFA Owner
-	nfa.ft3.setOwner(entitee, account.account);
-}
+
 
 // STEP 9 - QUERY WEAPON PLAYER OWNS
-query find_weapon_by_account_id( account_id: byte_array ){
-	
-	// searches for account based on provided account id
-	val account = ft3.acc.account @ { .id == account_id };
-	
-	// search through all NFA-weapons the player owns
-	val nfas = nfa.ft3.ownership @* { .entitee.nfa.name == 'weapons', .account == account }(
-		entitee = .entitee
-	);
-	
-	// loop through results and return them
-	val results = list<nfa.e.entity_description>();
-	for(nfaWeapon in nfas){
-		val en = nfa.e.getEntitee(nfaWeapon.entitee);		
-		results.add(en);
-	}
-	
-	return results;
-}
