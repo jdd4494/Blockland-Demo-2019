@@ -188,10 +188,15 @@ operation create_weapon(
 	weapon_info
 ){
 	// in this example, the NFA can be a type of weapon (sword, spear, axe, etc)
-	var nfa_weapon = nfa.n.nfa @? { .name == 'weapons' };
+	var nfa_weapon = nfa.n.nfa @ { .name == 'weapons' };
 	
-	// TODO CREATE WEAPONS
-	// TODO PASS OWNERSHIP OF WEAPON TO USER
+	val entityId = weapon_info.id;	
+	val entitee = nfa.e.createEntitee(nfa_weapon, entityId.hash(), map<text, gtv>([
+		"name": weapon_info.name.to_gtv(),
+		"type": weapon_info.type.to_gtv(),
+		"rarity": weapon_info.rarity.to_gtv(),
+		"damage": weapon_info.damage.to_gtv()
+	]));
 }
 ```
 
