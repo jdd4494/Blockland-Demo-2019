@@ -184,9 +184,14 @@ operation create_weapon_nfa(){
 * Create the weapon entitee.  In our example, weapons are a type of Non Fungible Asset. The actual weapon that we are creating is an entitee of that NFA.  The information about the weapon entitee are called properties.
 
 ```
-operation create_weapon(
-	weapon_info
+operation create_weapon_entitee(
+	weapon_info,
+	user_auth: ft3.acc.auth_descriptor
 ){
+	
+	// searches for account based on the provided vault private/public key
+	val account = ft3.acc.account_auth_descriptor @ { .descriptor_id == user_auth.hash() };
+	
 	// in this example, the NFA can be a type of weapon (sword, spear, axe, etc)
 	var nfa_weapon = nfa.n.nfa @ { .name == 'weapons' };
 	
@@ -197,6 +202,9 @@ operation create_weapon(
 		"rarity": weapon_info.rarity.to_gtv(),
 		"damage": weapon_info.damage.to_gtv()
 	]));
+	
+	// set NFA Owner
+	nfa.ft3.setOwner(entitee, account.account);
 }
 ```
 
