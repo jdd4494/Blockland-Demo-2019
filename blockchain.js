@@ -1,22 +1,23 @@
 
 const crypto = require('crypto');
 const { util } = require('postchain-client');
-const { 
-  SingleSignatureAuthDescriptor, 
-  DirectoryServiceBase, 
+const {
+  SingleSignatureAuthDescriptor,
+  DirectoryServiceBase,
   ChainConnectionInfo,
-  Blockchain, 
-  FlagsType, 
-  User 
+  Blockchain,
+  FlagsType,
+  User,
+  Operation
 } = require('ft3-lib');
- 
+
 // blockchain connection info
 class DirectoryService extends DirectoryServiceBase {
   constructor() {
     super([
       new ChainConnectionInfo(
         Buffer.from(
-          '0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF',  
+          '0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF',
           'hex'
         ),
         'http://localhost:7740'
@@ -38,7 +39,7 @@ class PlayerInfo {
 	this.skill = skill;
   }
 
-  serialize() {
+  toGTV() {
     return [this.username, this.level, this.strength, this.speed, this.skill];
   }
 }
@@ -56,22 +57,22 @@ class WeaponInfo {
 	this.price = price;
   }
 
-  serialize(){
+  toGTV(){
     return [this.id, this.name, this.type, this.rarity, this.damage, this.price];
   }
 }
 
 
 (async () => {
-  // initialize Blockchain object. initialize function receives an id of a blockchain to which 
+  // initialize Blockchain object. initialize function receives an id of a blockchain to which
   // we want to connect and a directory service which holds blockchain connection info.
-  // Blockchain class provides functions to call rell operations and queries. 
+  // Blockchain class provides functions to call rell operations and queries.
   // it is used by all ft3 lib entities (Asset, Account, ...) to interact with a blockchain.
   const blockchain = await Blockchain.initialize(
       Buffer.from(
-        '0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF', 
+        '0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF',
         'hex'
-      ), 
+      ),
       new DirectoryService()
   );
 
@@ -96,32 +97,38 @@ class WeaponInfo {
   // rest of parameters are passed to blockchain 'my_game.create_player' operation.
   try {
     await blockchain.call(
-      user,
-      'my_game.create_player',
-      playerInfo.serialize(),
-      user.authDescriptor.toGTV()
+      new Operation(
+        'my_game.create_player',
+        playerInfo.toGTV(),
+        user.authDescriptor
+      ),
+      user
     );
   } catch (error) {
     console.log(`Error creating new player: ${error.message}`);
     process.exit(1);
   }
-	
+
+  console.log("STEP 3 COMPLETED");
+
   // STEP 4 - lookup user account
   // get created account details by calling find_player_by_usernamequery
-  const userAccount = await blockchain.query('my_game.find_player_by_username', { 
+  let userAccount = await blockchain.query('my_game.find_player_by_username', {
   	username: playerInfo.username
   });
-  console.log(userAccount);
+  console.log("STEP 4 RESULTS: " , userAccount);
 
   // STEP 5 - update player
   playerInfo = new PlayerInfo("player1", 10, 50, 100, 50);
 
   try{
     await blockchain.call(
-      user,
-      'my_game.update_player',
-      playerInfo.serialize(),
-      crypto.randomBytes(32)
+      new Operation(
+        'my_game.update_player',
+        playerInfo.toGTV(),
+        crypto.randomBytes(32)
+      ),
+      user
     );
   } catch(error){
     console.log('Error updating player: ${error.message}');
@@ -132,18 +139,22 @@ class WeaponInfo {
   userAccount = await blockchain.query('my_game.find_player_by_username', {
 	username: playerInfo.username
   });
-  console.log(userAccount);
-  
+  console.log("STEP 5 RESULTS: " , userAccount);
+
   // STEP 7 - create weapon nfa
   try{
     await blockchain.call(
-      user,
-      'my_game.create_weapon_nfa'
+      new Operation(
+        'my_game.create_weapon_nfa'
+      ),
+      user
     );
   } catch(error){
-    console.log('Error updating player: ${error.message}');
+    console.log('Error creating weapon nfa: ${error.message}');
     process.exit(1);
   }
+
+  console.log("STEP 7 COMPLETED");
 
   // STEP 8 - create weapon entitee
   let id = Math.floor(new Date() / 1000);
@@ -151,15 +162,19 @@ class WeaponInfo {
 
   try{
     await blockchain.call(
+      new Operation(
+        'my_game.create_weapon_entitee',
+        weaponInfo.toGTV(),
+        user.authDescriptor
+      ),
       user,
-      'my_game.create_weapon_entitee',
-      weaponInfo.serialize(),
-      user.authDescriptor.toGTV()
     );
   } catch(error){
-    console.log('Error updating player: ${error.message}');
+    console.log('Error creating weapon entitee: ${error.message}');
     process.exit(1);
   }
+
+  console.log("STEP 8 COMPLETED");
 
   // STEP 9 - search weapons owned by player
   try{
@@ -176,6 +191,7 @@ class WeaponInfo {
    console.log('Error looking up player weapons: ${error.message}');
    process.exit(1);
   }
-  
+
+  console.log("STEP 9 COMPLETED");
 
 })()
