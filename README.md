@@ -190,7 +190,7 @@ operation create_weapon_entitee(
 ){
 	
 	// searches for account based on the provided vault private/public key
-	val account = ft3.acc.account_auth_descriptor @ { .descriptor_id == user_auth.hash() };
+	val account = ft3.acc.account @ { .id == user_auth.hash() };
 	
 	// in this example, the NFA can be a type of weapon (sword, spear, axe, etc)
 	var nfa_weapon = nfa.n.nfa @ { .name == 'weapons' };
@@ -200,11 +200,12 @@ operation create_weapon_entitee(
 		"name": weapon_info.name.to_gtv(),
 		"type": weapon_info.type.to_gtv(),
 		"rarity": weapon_info.rarity.to_gtv(),
-		"damage": weapon_info.damage.to_gtv()
+		"damage": weapon_info.damage.to_gtv(),
+		"price": weapon_info.price.to_gtv()
 	]));
 	
 	// set NFA Owner
-	nfa.ft3.setOwner(entitee, account.account);
+	nfa.ft3.setOwner(entitee, account);
 }
 ```
 
