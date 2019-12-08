@@ -19,7 +19,7 @@ In this demo project, we have created a few base libraries and namespaces due to
 
 Inside this project you should see two main directories, config and src.  The config folder will contain a node-config.properties file. This file is used to determine the node settings that are configured when ran. Src should contain your rell code. The main.rell file located inside of src is the file that you will be selecting to run your entire node.
 
-## Rell / Backend
+## Backend (Rell)
 
 ### Step 0
 
@@ -237,3 +237,8 @@ query find_weapon_by_account_id( account_id: byte_array ){
 	return results;
 }
 ```
+
+## Front End (Javascript)
+
+### Step 0
+
