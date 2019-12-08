@@ -5,7 +5,7 @@ This demo is designed to introduce a developer to creating a backend in rell.  B
 ## Prerequisites
 
 * Java 8+
-* To be able to run a Postchain node: PostresSQL 10
+* To be able to run a Postchain node: PostrgesSQL 10
 * (Recommended but optional) Rell Eclipse IDE https://www.chromia.dev/rell-eclipse/index.html
 
 <b>This demo assumes you are using the eclipse IDE</b>
