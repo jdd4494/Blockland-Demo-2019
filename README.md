@@ -15,10 +15,8 @@ The following steps will walk you through creating player and weapon data struct
 ### Setup / Installation
 
 * Java 8+
-* To be able to run a Postchain node: PostrgesSQL 10 http://www.postgresqltutorial.com/install-postgresql/
-* (Recommended but optional) Rell Eclipse IDE https://www.chromia.dev/rell-eclipse/index.html
-
-<b>This demo assumes you are using the eclipse IDE</b>
+* Install PostrgesSQL 10 http://www.postgresqltutorial.com/install-postgresql/
+* Rell Eclipse IDE https://www.chromia.dev/rell-eclipse/index.html
 
 A great guide on how to get your environment setup:
 https://rell.chromia.com/en/0.10.0/eclipse/eclipse.html
