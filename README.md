@@ -242,12 +242,82 @@ query find_weapon_by_account_id( account_id: byte_array ){
 
 ### Setup / Installation
 
-<b>Make sure your computer has node installed</b>
+* Install Node JS
 
 <b>windows:</b> https://www.guru99.com/download-install-node-js.html
 <br>
 <b>mac:</b> https://treehouse.github.io/installation-guides/mac/node-mac.html
 
+* Install postchain-client: https://www.npmjs.com/package/postchain-client
+* Install ft3-lib: https://www.npmjs.com/package/ft3-lib
 
 ### Step 0
+
+* Import the correct packages and related scripts
+
+```
+const crypto = require('crypto');
+const { util } = require('postchain-client');
+const {
+  SingleSignatureAuthDescriptor,
+  DirectoryServiceBase,
+  ChainConnectionInfo,
+  Blockchain,
+  FlagsType,
+  User,
+  Operation
+} = require('ft3-lib');
+
+// blockchain connection info
+class DirectoryService extends DirectoryServiceBase {
+  constructor() {
+    super([
+      new ChainConnectionInfo(
+        Buffer.from(
+          '0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF',
+          'hex'
+        ),
+        'http://localhost:7740'
+      )
+    ]);
+  }
+}
+```
+
+### Step 1
+
+* Create data classes that you will be passing into rell operations for creating a player and for a weapon
+
+```
+class PlayerInfo {
+  constructor(username, level, strength, speed, skill ) {
+  	this.username = username;
+	this.level = level;
+	this.strength = strength;
+	this.speed = speed;
+	this.skill = skill;
+  }
+
+  toGTV() {
+    return [this.username, this.level, this.strength, this.speed, this.skill];
+  }
+}
+
+class WeaponInfo {
+  constructor(id, name, type, rarity, damage, price){
+  	this.id = id;
+	this.name = name;
+	this.type = type;
+	this.rarity = rarity;
+	this.damage = damage;
+	this.price = price;
+  }
+
+  toGTV(){
+    return [this.id, this.name, this.type, this.rarity, this.damage, this.price];
+  }
+}
+```
+
+### Step 2
 
