@@ -321,3 +321,141 @@ class WeaponInfo {
 
 ### Step 2
 
+* Initialize a blockchain object. Blockchain class provides functions to call rell operations and queries.
+* Create a dapp user. an instance of User object holds data needed to sign transaction and to interact with the ft3 lib
+
+```
+const blockchain = await Blockchain.initialize(
+      Buffer.from(
+        '0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF',
+        'hex'
+      ),
+      new DirectoryService()
+);
+  
+const keyPair = util.makeKeyPair();
+const user = new User(
+    keyPair,
+    new SingleSignatureAuthDescriptor(
+      keyPair.pubKey,
+      [FlagsType.Account, FlagsType.Transfer]
+    )
+);
+```
+
+### Step 3
+
+* Creates a new dapp account. The first parameter is the dapp user.  Call function uses keyPair property to sign the transaction.  The rest is passed into the create_player function
+
+```
+  let playerInfo = new PlayerInfo("player1", 1, 5, 10, 5);
+  
+  try {
+    await blockchain.call(
+      new Operation(
+        'my_game.create_player',
+        playerInfo.toGTV(),
+        user.authDescriptor
+      ),
+      user
+    );
+  } catch (error) {
+    console.log(`Error creating new player: ${error.message}`);
+    process.exit(1);
+  }
+```
+
+### Step 4
+
+* Get created account details by calling find_player_by_username query
+
+```
+  let userAccount = await blockchain.query('my_game.find_player_by_username', {
+  	username: playerInfo.username
+  });
+```
+
+### Step 5
+
+* Update an existing player's data based on their username
+
+```
+  playerInfo = new PlayerInfo("player1", 10, 50, 100, 50);
+
+  try{
+    await blockchain.call(
+      new Operation(
+        'my_game.update_player',
+        playerInfo.toGTV(),
+        crypto.randomBytes(32)
+      ),
+      user
+    );
+  } catch(error){
+    console.log('Error updating player: ${error.message}');
+    process.exit(1);
+  }
+```
+
+### Step 6
+
+* How to create weapon NFA type
+
+```
+  try{
+    await blockchain.call(
+      new Operation(
+        'my_game.create_weapon_nfa'
+      ),
+      user
+    );
+  } catch(error){
+    console.log('Error creating weapon nfa: ${error.message}');
+    process.exit(1);
+  }
+```
+
+### Step 7
+
+* How to create weapon entitee (a unique weapon)
+
+```
+  let id = Math.floor(new Date() / 1000);
+  let weaponInfo = new WeaponInfo(id, "Sword of a 1000 Truths", "sword", "legendary", 1000000, 9999);
+
+  try{
+    await blockchain.call(
+      new Operation(
+        'my_game.create_weapon_entitee',
+        weaponInfo.toGTV(),
+        user.authDescriptor
+      ),
+      user,
+    );
+  } catch(error){
+    console.log('Error creating weapon entitee: ${error.message}');
+    process.exit(1);
+  }
+```
+
+### Step 8
+
+* How to lookup all the weapon entitees belonging to a player
+
+```
+  try{
+    let weapons = await blockchain.query('my_game.find_weapon_by_account_id', {
+      account_id: userAccount.account_id.toString('hex')
+    });
+
+    if(weapons == null || weapons.length == 0){
+      console.log('No weapons owned by player');
+    }else{
+      console.log(weapons);
+    }
+  } catch(error){
+   console.log('Error looking up player weapons: ${error.message}');
+   process.exit(1);
+  }
+```
+
