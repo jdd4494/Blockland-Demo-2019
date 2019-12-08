@@ -19,12 +19,14 @@ In this demo project, we have created a few base libraries and namespaces due to
 
 Inside this project you should see two main directories, config and src.  The config folder will contain a node-config.properties file. This file is used to determine the node settings that are configured when ran. Src should contain your rell code. The main.rell file located inside of src is the file that you will be selecting to run your entire node.
 
-## Step 0
+## Rell / Backend
+
+### Step 0
 
 * Create a new file and call it player.rell inside of: rell/src/my_game.
 * Create a second file and call it weapon.rell inside of: rell/src/my_game. 
 
-## Step 1
+### Step 1
 
 <b>Inside of player.rell:</b>
 * Create a player entity. This will be a table stored in the database that will contain your Player data
@@ -40,7 +42,7 @@ entity player {
 }
 ```
 
-## Step 2
+### Step 2
 
 <b>Inside of player.rell:</b>
 * Create a player info struct. Structs are similar to entity classes, but are held temporarily in memory and not in the database
@@ -55,7 +57,7 @@ struct player_info{
 }
 ```
 
-## Step 3
+### Step 3
 
 <b>Inside of player.rell:</b>
 * Write an operation that will create a player and add it to the Player table
@@ -82,7 +84,7 @@ operation create_player(
 }
 ```
 
-## Step 4
+### Step 4
 
 <b>Inside of player.rell:</b>
 * Write a query that will search the Player table for players by their username
@@ -110,7 +112,7 @@ query find_player_by_username(username: text){
 }
 ```
 
-## Step 5
+### Step 5
 
 <b>Inside of player.rell:</b>
 * Write an operation that will update a player's information in the Player table.
@@ -135,7 +137,7 @@ operation update_player(
 }
 ```
 
-## Step 6
+### Step 6
 
 <b>Inside of weapon.rell:</b>
 * Create a weapon info struct that will contain the weapon's data
@@ -150,7 +152,7 @@ struct weapon_info{
 	price: integer;
 }
 ```
-## Step 7
+### Step 7
 
 <b>Inside of weapon.rell:</b>
 * Create the weapon NFA 
@@ -178,7 +180,7 @@ operation create_weapon_nfa(){
 }
 ```
 
-## Step 8
+### Step 8
 
 <b>Inside of weapon.rell:</b>
 * Create the weapon entitee.  In our example, weapons are a type of Non Fungible Asset. The actual weapon that we are creating is an entitee of that NFA.  The information about the weapon entitee are called properties.
@@ -209,7 +211,7 @@ operation create_weapon_entitee(
 }
 ```
 
-## Step 9
+### Step 9
 
 <b>Inside of weapon.rell:</b>
 * Write a query that will allow us to lookup weapon NFAs owned by a player using their account id 
