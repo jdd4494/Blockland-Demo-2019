@@ -463,7 +463,7 @@ const user = new User(
 
 ### Final Step
 
-<b>RUn the code in terminal or command prompt using the following line: </b>
+<b>Run the code in terminal or command prompt using the following line: </b>
 <br>
 ```
 node blockchain.js
