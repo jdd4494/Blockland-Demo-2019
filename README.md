@@ -240,5 +240,13 @@ query find_weapon_by_account_id( account_id: byte_array ){
 
 ## Front End (Javascript)
 
+### Setup / Installation
+
+<b>Make sure your computer has node installed</b>
+
+<b>windows:</b> https://www.guru99.com/download-install-node-js.html
+<b>mac:</b> https://treehouse.github.io/installation-guides/mac/node-mac.html
+
+
 ### Step 0
 
