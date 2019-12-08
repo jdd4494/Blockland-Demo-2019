@@ -2,17 +2,6 @@
 
 This demo is designed to introduce a developer to creating a backend in rell.  By the end of it, you should have a basic understanding on how to create, manipulate, and search databases.  This demo will also introduce Non Fungible Assets, and how they could be used inside of a game.
 
-## Prerequisites
-
-* Java 8+
-* To be able to run a Postchain node: PostrgesSQL 10 http://www.postgresqltutorial.com/install-postgresql/
-* (Recommended but optional) Rell Eclipse IDE https://www.chromia.dev/rell-eclipse/index.html
-
-<b>This demo assumes you are using the eclipse IDE</b>
-
-A great guide on how to get your environment setup:
-https://rell.chromia.com/en/0.10.0/eclipse/eclipse.html
-
 ## Overview
 
 The libraries found inside the directory: /rell/src/lib were provided by Chromaway and are not included in every default rell project. 
@@ -22,6 +11,17 @@ Inside this project you should see two main directories, config and src.  The co
 ## Backend (Rell)
 
 The following steps will walk you through creating player and weapon data structures on the blockchain.
+
+### Setup / Installation
+
+* Java 8+
+* To be able to run a Postchain node: PostrgesSQL 10 http://www.postgresqltutorial.com/install-postgresql/
+* (Recommended but optional) Rell Eclipse IDE https://www.chromia.dev/rell-eclipse/index.html
+
+<b>This demo assumes you are using the eclipse IDE</b>
+
+A great guide on how to get your environment setup:
+https://rell.chromia.com/en/0.10.0/eclipse/eclipse.html
 
 ### Step 0
 
