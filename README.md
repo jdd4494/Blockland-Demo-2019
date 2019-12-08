@@ -21,6 +21,8 @@ Inside this project you should see two main directories, config and src.  The co
 
 ## Backend (Rell)
 
+The following steps will walk you through creating player and weapon data structures on the blockchain.
+
 ### Step 0
 
 * Create a new file and call it player.rell inside of: rell/src/my_game.
@@ -239,6 +241,8 @@ query find_weapon_by_account_id( account_id: byte_array ){
 ```
 
 ## Front End (Javascript)
+
+The following steps demonstrate how to communicate with the player and weapon data structures on the blockchain using javascript
 
 ### Setup / Installation
 
