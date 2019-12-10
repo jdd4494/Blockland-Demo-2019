@@ -1,0 +1,33 @@
+
+import c: ^.component;
+import e: ^.entitee;
+import p: ^.property;
+import t: ^.supported_types;
+
+operation update_property(entity_id: byte_array, property_name: text, value: gtv) {
+	val e = e.entitee @ { entity_id };
+	val id = (e.nfa.name, property_name, chain_context.blockchain_rid).hash();
+	
+	val comp = c.component @ { id };
+	val prop = property @ { comp };
+	
+	require(prop.is_mutable, 'Property is not mutable');
+	
+	when (comp.type) {
+		t.type.INTEGER -> {
+			update p.integer_property @ { prop } ( value = integer.from_gtv(value) ); 
+		}
+		t.type.ENUM -> {
+			update p.enum_property @ { prop } ( value = text.from_gtv(value) ); 
+		}
+		t.type.TEXT -> {
+			update p.text_property @ { prop } ( value = text.from_gtv(value) );
+		}
+		t.type.DECIMAL -> {
+			update p.decimal_property @ { prop } ( value = decimal.from_gtv(value) );
+		}
+		t.type.BYTE_ARRAY -> {
+			update p.bytes_property @ { prop } ( value = byte_array.from_gtv(value) );
+		}
+	}
+}

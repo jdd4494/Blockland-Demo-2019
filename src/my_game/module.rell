@@ -1,0 +1,25 @@
+// for entities and objects, those names are the SQL table names where the data is stored
+// for operations and queries, a mount name is used to invoke an operation or a query from the outside
+@mount('my_game')
+
+// a directory with one or multiple .rell files
+// this signifies that all files inside of my_game directory are part of the same module
+module;
+
+// allows all .rell files within the my_game module to call functions, structs, etc 
+// from these imported modules
+namespace ft3{
+	import acc: ^.lib.ft3.account;
+	import core: ^.lib.ft3.core;
+}
+
+namespace nfa{
+	import c: ^.lib.nfa.core.component;
+	import e: ^.lib.nfa.core.entitee;
+	import n: ^.lib.nfa.core.nfa;
+	import p: ^.lib.nfa.core.property;
+	import t: ^.lib.nfa.core.supported_types;
+	import ft3: ^.lib.nfa.ft3.ownership;
+}
+
+// Added this so we can read the postchain from terminal easily

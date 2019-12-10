@@ -1,0 +1,29 @@
+
+import c: ^.component;
+import p: ^.property;
+
+
+query get_nfa(name, blockchain_rid: byte_array) {
+	val n = require_not_empty(nfa @? { .id == (name, blockchain_rid).hash() });
+	
+	val components = p.property@* { n }.component;
+	
+	val resComponents = list<c.component_iface>();
+	for (component in components) {
+		resComponents.add(c.component_iface(
+			id = component.id,
+			name = component.name,
+			blockchain_rid = component.blockchain_rid,
+			type = component.type,
+			extra = component.extra.to_gtv()
+		));
+	}
+	
+	return (
+		id = n.id,
+		name = n.name,
+		desc = n.desc,
+		max_entities = n.max_entities,
+		components = resComponents
+	);
+}

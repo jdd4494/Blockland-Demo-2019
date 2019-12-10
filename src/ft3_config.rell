@@ -1,0 +1,7 @@
+module;
+
+object ft3_config {
+  blockchain_name: text = "My Game Example";
+  blockchain_website: text = "https://mygameexampledomain.com";
+  blockchain_description: text = "Description of what this chain does";
+}

@@ -1,0 +1,7 @@
+
+
+
+query get_entity(entity_id: byte_array, components_to_retrieve: list<text>) {
+	val e = entitee@{.id == entity_id};
+	return getEntitee(e);	
+}
